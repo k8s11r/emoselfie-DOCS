@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #fff; font-family: Pretendard, -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif; color: #111318; -webkit-font-smoothing: antialiased; }
+  a { color: #e92570; text-decoration: none; font-weight: 900; }
+  a:hover { color: #111318; }
+</style>
+</helmet>
+
+<div style="width: 390px; height: 844px; margin: 0 auto; box-sizing: border-box; padding: 44px 20px 24px; display: flex; flex-direction: column; background: #fffaf2; background-image: radial-gradient(circle at 50% 4%, rgba(17,19,24,.06), transparent 30%), radial-gradient(circle at 92% 90%, rgba(255,61,134,.1), transparent 28%)">
+
+  <div style="display: flex; align-items: center; height: 44px">
+    <div style="padding: 7px 11px; background: #fff; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 12px; white-space: nowrap">이모셀피</div>
+  </div>
+
+  <div style="display: flex; justify-content: center; margin-top: 26px">
+    <div style="width: 124px; height: 124px; border: 4px solid #111318; border-radius: 38px; background: #fff; box-shadow: 0 8px 0 #111318; display: flex; align-items: center; justify-content: center; font-size: 58px">{{ hero }}</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 22px; text-align: center">
+    <div style="font-family: Jua, Pretendard, sans-serif; font-size: 26px; line-height: 1.2">{{ title }}</div>
+    <div style="font-size: 15px; line-height: 22px; color: #5b5b5b; max-width: 29ch; text-wrap: pretty">{{ body }}</div>
+  </div>
+
+  <div style="margin-top: 22px; border: 3px solid #111318; border-radius: 24px; background: #fff; box-shadow: 0 8px 0 #111318; padding: 16px; position: relative">
+    <div style="position: absolute; left: 18px; top: -17px; background: #ffd72f; border: 2px solid #111318; padding: 7px 12px; border-radius: 999px; font-weight: 900; font-size: 12px; white-space: nowrap; transform: rotate(-2deg)">{{ guideTitle }}</div>
+    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+        <div style="display: flex; align-items: center; gap: 11px">
+          <div style="width: 28px; height: 28px; border: 2px solid #111318; border-radius: 999px; background: #80efd6; display: flex; align-items: center; justify-content: center; font-family: Jua, sans-serif; font-size: 14px; flex: none">{{ s.n }}</div>
+          <div style="font-size: 14px; line-height: 19px; font-weight: 700; color: #4a4a4a">{{ s.text }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex: 1; min-height: 10px"></div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; gap: 10px">
+      <div onClick="{{ toggleOs }}" style="flex: 1; height: 50px; border: 3px solid #111318; border-radius: 16px; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; box-shadow: 0 4px 0 #111318; cursor: pointer; user-select: none; white-space: nowrap">{{ osSwitchLabel }}</div>
+    </div>
+    <div style="height: 60px; border: 3px solid #111318; border-radius: 18px; background: #ff3d86; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; box-shadow: 0 6px 0 #111318; cursor: pointer; user-select: none">다시 시도</div>
+    <div style="font-size: 13px; line-height: 18px; color: #6b6b6b; text-align: center; text-wrap: pretty">사진은 라운드가 끝나면 바로 삭제돼요. 허용하면 바로 참여할 수 있어요.</div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 390, &quot;height&quot;: 844}, &quot;reason&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;거부됨&quot;, &quot;카메라 없음&quot;, &quot;다른 앱 사용 중&quot;], &quot;default&quot;: &quot;거부됨&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;상황&quot;}, &quot;os&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;iOS Safari&quot;, &quot;Android Chrome&quot;], &quot;default&quot;: &quot;iOS Safari&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;상황&quot;}}">
+class Component extends DCLogic {
+  state = { os: null };
+
+  renderVals() {
+    const reason = this.props.reason ?? "거부됨";
+    const os = this.state.os ?? this.props.os ?? "iOS Safari";
+    const isIos = os === "iOS Safari";
+
+    const copy = {
+      "거부됨": {
+        hero: "🙈",
+        title: "카메라 없이는\n참여할 수 없어요",
+        body: "이 게임은 지금 찍은 셀카로만 진행돼요. 브라우저 설정에서 카메라를 허용하면 참여할 수 있어요."
+      },
+      "카메라 없음": {
+        hero: "🔌",
+        title: "카메라를 찾을 수 없어요",
+        body: "이 기기에 사용할 수 있는 카메라가 없어요. 카메라가 있는 기기에서 링크를 다시 열어주세요."
+      },
+      "다른 앱 사용 중": {
+        hero: "📹",
+        title: "카메라가 지금\n다른 곳에서 쓰이고 있어요",
+        body: "영상통화나 카메라 앱을 종료한 뒤 다시 시도해 주세요."
+      }
+    };
+    const c = copy[reason] || copy["거부됨"];
+
+    const steps = isIos
+      ? [
+          { n: 1, text: "주소창 왼쪽의 ⓐⒶ 버튼을 누르세요" },
+          { n: 2, text: "‘웹사이트 설정’을 선택하세요" },
+          { n: 3, text: "카메라를 ‘허용’으로 바꾸고 새로고침" }
+        ]
+      : [
+          { n: 1, text: "주소창 왼쪽의 자물쇠 아이콘을 누르세요" },
+          { n: 2, text: "‘권한’ 또는 ‘사이트 설정’으로 들어가세요" },
+          { n: 3, text: "카메라를 ‘허용’으로 바꾸고 새로고침" }
+        ];
+
+    return {
+      hero: c.hero,
+      title: c.title.replace("\n", " "),
+      body: c.body,
+      guideTitle: isIos ? "iOS Safari 설정 방법" : "Android Chrome 설정 방법",
+      steps: reason === "거부됨" ? steps : [{ n: 1, text: c.body }],
+      osSwitchLabel: isIos ? "Android Chrome 방법 보기" : "iOS Safari 방법 보기",
+      toggleOs: () => this.setState({ os: isIos ? "Android Chrome" : "iOS Safari" })
+    };
+  }
+}
+</script>
+</body>
+</html>

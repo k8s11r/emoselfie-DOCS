@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #fff; font-family: Pretendard, -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif; color: #111318; -webkit-font-smoothing: antialiased; }
+  a { color: #e92570; text-decoration: none; font-weight: 900; }
+  a:hover { color: #111318; }
+  @keyframes emo-tick { 0%, 100% { opacity: 1 } 50% { opacity: .3 } }
+</style>
+</helmet>
+
+<div style="width: 390px; height: 844px; margin: 0 auto; box-sizing: border-box; padding: 44px 20px 24px; display: flex; flex-direction: column; align-items: center; background: #fffaf2; background-image: radial-gradient(circle at 50% 4%, rgba(255,215,47,.24), transparent 30%)">
+
+  <div style="width: 100%; display: flex; align-items: center; justify-content: space-between; height: 44px">
+    <div style="padding: 7px 11px; background: #fff; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 12px; white-space: nowrap">이모셀피</div>
+    <div style="display: flex; gap: 6px">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+        <div onClick="{{ t.pick }}" style="width: 24px; height: 24px; border: 2px solid #111318; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; cursor: pointer; user-select: none; background: {{ t.bg }}; color: {{ t.fg }}">{{ t.n }}</div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center">
+    <div style="width: 120px; height: 120px; border: 4px solid #111318; border-radius: 38px; box-shadow: 0 8px 0 #111318; display: flex; align-items: center; justify-content: center; font-size: 56px; background: {{ view.heroBg }}">{{ view.hero }}</div>
+    <div style="display: flex; flex-direction: column; gap: 8px; align-items: center">
+      <div style="font-family: Jua, Pretendard, sans-serif; font-size: 27px; line-height: 1.2">{{ view.title }}</div>
+      <div style="font-size: 15px; line-height: 22px; color: #5b5b5b; max-width: 27ch; text-wrap: pretty">{{ view.body }}</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; padding: 9px 14px; border: 2.5px solid #111318; border-radius: 999px; background: #fff; box-shadow: 0 4px 0 #111318; display: {{ view.statusShow }}">
+      <span style="width: 8px; height: 8px; border-radius: 999px; background: #ff3d86; animation: emo-tick 1s steps(2, start) infinite"></span>
+      <span style="font-size: 13px; font-weight: 900; white-space: nowrap">{{ view.status }}</span>
+    </div>
+  </div>
+
+  <div style="width: 100%; display: flex; flex-direction: column; gap: 10px">
+    <div style="height: 60px; border: 3px solid #111318; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; box-shadow: 0 6px 0 #111318; cursor: pointer; user-select: none; white-space: nowrap; background: {{ view.primaryBg }}; color: {{ view.primaryFg }}">{{ view.primary }}</div>
+    <div style="height: 50px; border: 3px solid #111318; border-radius: 16px; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; color: #6b6b6b; box-shadow: 0 4px 0 #111318; cursor: pointer; user-select: none; white-space: nowrap; display: {{ view.secondaryShow }}">{{ view.secondary }}</div>
+    <div style="font-size: 13px; line-height: 18px; color: #6b6b6b; text-align: center; text-wrap: pretty">{{ view.foot }}</div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 390, &quot;height&quot;: 844}, &quot;kind&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;방 없음&quot;, &quot;방 만석&quot;, &quot;연결 끊김&quot;, &quot;서버 점검&quot;], &quot;default&quot;: &quot;방 없음&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;오류&quot;}}">
+class Component extends DCLogic {
+  state = { kind: null };
+
+  list() {
+    return ["방 없음", "방 만석", "연결 끊김", "서버 점검"];
+  }
+
+  views() {
+    return {
+      "방 없음": {
+        hero: "🔍",
+        heroBg: "#fff",
+        title: "방을 찾을 수 없어요",
+        body: "링크가 만료됐거나 방이 이미 닫혔어요. 새로 만들어 친구들을 불러보세요.",
+        primary: "새 방 만들기",
+        primaryBg: "#ff3d86",
+        primaryFg: "#ffffff",
+        secondary: "링크 다시 확인하기",
+        secondaryShow: "flex",
+        statusShow: "none",
+        status: "",
+        foot: "방은 마지막 라운드가 끝나면 자동으로 닫혀요"
+      },
+      "방 만석": {
+        hero: "🙌",
+        heroBg: "#ffd72f",
+        title: "방이 가득 찼어요",
+        body: "이 방은 12명이 모두 찼어요. 자리가 나면 바로 들어갈 수 있어요.",
+        primary: "새로고침해서 다시 시도",
+        primaryBg: "#ff3d86",
+        primaryFg: "#ffffff",
+        secondary: "새 방 만들기",
+        secondaryShow: "flex",
+        statusShow: "none",
+        status: "",
+        foot: "방 정보는 참여한 뒤에 보여드려요"
+      },
+      "연결 끊김": {
+        hero: "📡",
+        heroBg: "#fff",
+        title: "연결이 끊겼어요",
+        body: "네트워크가 불안정해요. 다시 연결하는 중이니 잠시만 기다려 주세요.",
+        primary: "지금 다시 연결",
+        primaryBg: "#111318",
+        primaryFg: "#ffffff",
+        secondary: "방 나가기",
+        secondaryShow: "flex",
+        statusShow: "flex",
+        status: "재연결 시도 2 / 5",
+        foot: "게임은 그대로 있어요. 돌아오면 진행 중인 라운드로 이어집니다."
+      },
+      "서버 점검": {
+        hero: "🛠",
+        heroBg: "#80efd6",
+        title: "서버 점검 중이에요",
+        body: "잠깐 손보고 있어요. 몇 분 뒤에 다시 열어주시면 바로 놀 수 있어요.",
+        primary: "다시 시도",
+        primaryBg: "#ff3d86",
+        primaryFg: "#ffffff",
+        secondary: "",
+        secondaryShow: "none",
+        statusShow: "flex",
+        status: "예상 완료 10분 이내",
+        foot: "점검이 끝나면 링크를 다시 열면 됩니다"
+      }
+    };
+  }
+
+  renderVals() {
+    const kind = this.state.kind ?? this.props.kind ?? "방 없음";
+    const views = this.views();
+    return {
+      view: views[kind] || views["방 없음"],
+      tabs: this.list().map((k, i) => ({
+        n: i + 1,
+        bg: k === kind ? "#111318" : "#fff",
+        fg: k === kind ? "#fff" : "#111318",
+        pick: () => this.setState({ kind: k })
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

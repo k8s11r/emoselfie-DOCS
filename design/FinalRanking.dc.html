@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #fff; font-family: Pretendard, -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif; color: #111318; -webkit-font-smoothing: antialiased; }
+  a { color: #e92570; text-decoration: none; font-weight: 900; }
+  a:hover { color: #111318; }
+  @keyframes emo-wiggle { 0%, 100% { transform: rotate(-4deg) } 50% { transform: rotate(4deg) } }
+  @keyframes emo-rise { 0% { transform: translateY(14px); opacity: 0 } 100% { transform: translateY(0); opacity: 1 } }
+</style>
+</helmet>
+
+<div style="width: 390px; height: 844px; margin: 0 auto; box-sizing: border-box; padding: 44px 20px 24px; display: flex; flex-direction: column; background: #fffaf2; background-image: radial-gradient(circle at 50% 0%, rgba(255,215,47,.4), transparent 34%), radial-gradient(circle at 8% 88%, rgba(255,61,134,.16), transparent 30%), radial-gradient(circle at 94% 70%, rgba(143,102,255,.14), transparent 26%)">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; height: 44px">
+    <div style="padding: 7px 11px; background: #fff; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 12px; white-space: nowrap">{{ roundsText }}</div>
+    <div style="padding: 7px 11px; background: #80efd6; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 12px; white-space: nowrap">게임 종료!</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 2px; margin-top: 4px; text-align: center">
+    <div style="font-size: 26px; animation: emo-wiggle 2s ease-in-out infinite">🏆</div>
+    <div style="font-family: Jua, Pretendard, sans-serif; font-size: 24px; line-height: 1.15; white-space: nowrap">{{ winnerHeadline }}</div>
+    <div style="font-size: 13px; line-height: 18px; color: #5b5b5b">{{ winnerSub }}</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 8px; align-items: end; margin-top: 10px">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; animation: emo-rise .4s ease-out .1s both">
+      <div style="width: 48px; height: 48px; border: 3px solid #111318; border-radius: 16px; background: #5ac8ff; display: flex; align-items: center; justify-content: center; font-size: 23px">{{ second.emoji }}</div>
+      <div style="font-size: 12px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%">{{ second.name }}</div>
+      <div style="width: 100%; height: 50px; border: 3px solid #111318; border-radius: 16px 16px 0 0; background: #fff; box-shadow: inset 0 -4px 0 #f1eee9; display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <div style="font-family: Jua, sans-serif; font-size: 19px; line-height: 1">2</div>
+        <div style="font-size: 12px; font-weight: 900; color: #6b6b6b; font-variant-numeric: tabular-nums">{{ second.total }}</div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; animation: emo-rise .45s ease-out both">
+      <div style="padding: 5px 9px; background: #ffd72f; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 11px; white-space: nowrap; transform: rotate(-3deg)">표정 챔피언</div>
+      <div style="width: 60px; height: 60px; border: 3px solid #111318; border-radius: 20px; background: #ffd72f; box-shadow: 0 5px 0 #111318; display: flex; align-items: center; justify-content: center; font-size: 29px">{{ first.emoji }}</div>
+      <div style="font-size: 13px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%">{{ first.name }}</div>
+      <div style="width: 100%; height: 68px; border: 3px solid #111318; border-radius: 16px 16px 0 0; background: linear-gradient(180deg,#fff9ce,#fff); display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <div style="font-family: Jua, sans-serif; font-size: 25px; line-height: 1">1</div>
+        <div style="font-size: 13px; font-weight: 900; color: #e92570; font-variant-numeric: tabular-nums">{{ first.total }}</div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; animation: emo-rise .4s ease-out .2s both">
+      <div style="width: 48px; height: 48px; border: 3px solid #111318; border-radius: 16px; background: #b8f16a; display: flex; align-items: center; justify-content: center; font-size: 23px">{{ third.emoji }}</div>
+      <div style="font-size: 12px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%">{{ third.name }}</div>
+      <div style="width: 100%; height: 40px; border: 3px solid #111318; border-radius: 16px 16px 0 0; background: #fff; box-shadow: inset 0 -4px 0 #f1eee9; display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <div style="font-family: Jua, sans-serif; font-size: 18px; line-height: 1">3</div>
+        <div style="font-size: 12px; font-weight: 900; color: #6b6b6b; font-variant-numeric: tabular-nums">{{ third.total }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 10px; border: 3px solid #111318; border-radius: 20px; background: #fff; box-shadow: 0 5px 0 #111318; padding: 10px 12px; display: flex; align-items: center; gap: 10px">
+    <div style="width: 42px; height: 42px; border: 2px solid #111318; border-radius: 14px; background: #ff3d86; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 19px; flex: none">♥</div>
+    <div style="display: flex; flex-direction: column; gap: 1px; min-width: 0">
+      <div style="font-size: 11px; font-weight: 900; letter-spacing: 0.1em; color: #e92570; white-space: nowrap">가장 사랑받은 표정</div>
+      <div style="font-size: 15px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ mostLikedLine }}</div>
+    </div>
+    <div style="margin-left: auto; font-family: Jua, sans-serif; font-size: 22px; line-height: 1; color: #e92570; flex: none; font-variant-numeric: tabular-nums">♥{{ mostLikedCount }}</div>
+  </div>
+
+  <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 10px">
+    <div style="font-family: Jua, sans-serif; font-size: 15px; white-space: nowrap; flex: none">전체 순위</div>
+    <div style="font-size: 12px; font-weight: 900; color: #6b6b6b; white-space: nowrap; flex: none; margin-left: auto">{{ listNote }}</div>
+  </div>
+
+  <div data-final-list="1" style="flex: 1; min-height: 0; margin-top: 6px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px">
+    <sc-for list="{{ rest }}" as="r" hint-placeholder-count="7">
+      <div style="flex: none; border: 2.5px solid #111318; border-radius: 16px; padding: 7px 10px; display: flex; align-items: center; gap: 9px; background: {{ r.bg }}; box-shadow: 0 3px 0 #111318">
+        <div style="width: 26px; height: 26px; border: 2px solid #111318; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: Jua, sans-serif; font-size: 13px; flex: none; background: {{ r.rankBg }}">{{ r.rank }}</div>
+        <div style="width: 34px; height: 34px; border: 2px solid #111318; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex: none; background: {{ r.avatarBg }}">{{ r.emoji }}</div>
+        <div style="display: flex; flex-direction: column; gap: 1px; min-width: 0">
+          <div style="font-size: 14px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ r.name }}</div>
+          <div style="font-size: 12px; font-weight: 700; color: #6b6b6b; white-space: nowrap">{{ r.sub }}</div>
+        </div>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 8px; flex: none">
+          <div style="display: flex; align-items: center; gap: 3px; font-size: 12px; font-weight: 900; color: #e92570; white-space: nowrap"><span>♥</span><span style="font-variant-numeric: tabular-nums">{{ r.likes }}</span></div>
+          <div style="display: flex; align-items: center; gap: 3px; font-size: 12px; font-weight: 900; color: #6b6b6b; white-space: nowrap"><span style="font-family: Jua, Pretendard, sans-serif">?</span><span style="font-variant-numeric: tabular-nums">{{ r.hmms }}</span></div>
+          <div style="font-family: Jua, sans-serif; font-size: 20px; line-height: 1; font-variant-numeric: tabular-nums">{{ r.total }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px">
+    <div style="height: 58px; border: 3px solid #111318; border-radius: 18px; background: #ff3d86; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900; box-shadow: 0 5px 0 #111318; cursor: pointer; user-select: none">{{ primaryLabel }}</div>
+    <div style="display: flex; gap: 10px">
+      <div style="flex: 1; height: 50px; border: 3px solid #c9c4bc; border-radius: 16px; background: #eae7e2; color: #8b8b8b; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; white-space: nowrap">결과 공유</div>
+      <div style="flex: 1; height: 50px; border: 3px solid #111318; border-radius: 16px; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; color: #6b6b6b; box-shadow: 0 4px 0 #111318; cursor: pointer; user-select: none">방 나가기</div>
+    </div>
+    <div style="font-size: 13px; line-height: 18px; color: #6b6b6b; text-align: center; text-wrap: pretty">결과 공유는 준비 중이에요 · 셀카는 방을 나가면 모두 삭제됩니다</div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 390, &quot;height&quot;: 844}, &quot;rounds&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 5, &quot;min&quot;: 3, &quot;max&quot;: 9, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;방&quot;}, &quot;players&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 10, &quot;min&quot;: 3, &quot;max&quot;: 10, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;방&quot;}, &quot;isHost&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;방&quot;}}">
+class Component extends DCLogic {
+  roster() {
+    return [
+      { id: "p2", name: "지수", emoji: "🙂", avatarBg: "#ff3d86", total: 431, likes: 9, hmms: 1, best: "무서움 96점" },
+      { id: "p4", name: "태호", emoji: "😲", avatarBg: "#5ac8ff", total: 402, likes: 6, hmms: 2, best: "놀람 94점" },
+      { id: "p5", name: "윤아", emoji: "😨", avatarBg: "#80efd6", total: 377, likes: 11, hmms: 0, best: "기쁨 91점" },
+      { id: "me", name: "수아 (나)", emoji: "😆", avatarBg: "#ffd72f", total: 364, likes: 7, hmms: 3, best: "우웩 89점" },
+      { id: "p3", name: "현우", emoji: "😎", avatarBg: "#8f66ff", total: 318, likes: 4, hmms: 5, best: "시크 88점" },
+      { id: "p6", name: "서준", emoji: "😐", avatarBg: "#b8f16a", total: 356, likes: 5, hmms: 2, best: "시크 90점" },
+      { id: "p7", name: "하윤", emoji: "🤢", avatarBg: "#ff5a47", total: 418, likes: 13, hmms: 1, best: "우웩 95점" },
+      { id: "p8", name: "민지", emoji: "🤭", avatarBg: "#ffd72f", total: 341, likes: 8, hmms: 4, best: "기쁨 87점" },
+      { id: "p9", name: "정우", emoji: "🤩", avatarBg: "#8f66ff", total: 299, likes: 3, hmms: 6, best: "놀람 84점" },
+      { id: "p10", name: "다은", emoji: "😴", avatarBg: "#5ac8ff", total: 387, likes: 6, hmms: 2, best: "슬픔 93점" }
+    ].slice(0, this.props.players ?? 10);
+  }
+
+  componentDidMount() {
+    // 내 순위가 접혀 있으면 바로 보이도록 리스트를 살짝 스크롤
+    this._t = setTimeout(() => {
+      const el = document.querySelector('[data-final-list="1"]');
+      if (!el) return;
+      const mine = el.children[this._myIdx];
+      if (!mine) return;
+      const off = mine.getBoundingClientRect().top - el.getBoundingClientRect().top + el.scrollTop;
+      if (off + mine.offsetHeight > el.clientHeight) el.scrollTop = Math.max(0, off - 12);
+    }, 160);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this._t);
+  }
+
+  renderVals() {
+    const rounds = this.props.rounds ?? 5;
+    const ranked = this.roster().slice().sort((a, b) => b.total - a.total);
+    const [first, second, third] = ranked;
+    const myRank = ranked.findIndex((p) => p.id === "me") + 1;
+    const mostLiked = ranked.slice().sort((a, b) => b.likes - a.likes)[0];
+    this._myIdx = Math.max(0, myRank - 4);
+
+    return {
+      roundsText: rounds + "라운드 완료 · " + ranked.length + "명",
+      listNote: "4위 ~ " + ranked.length + "위 · 나는 " + myRank + "위",
+      first,
+      second,
+      third,
+      winnerHeadline: first.name + " 우승!",
+      winnerSub: rounds + "라운드 합계 " + first.total + "점 · 최고 " + first.best,
+      rest: ranked.slice(3).map((p, i) => ({
+        rank: i + 4,
+        name: p.name,
+        emoji: p.emoji,
+        avatarBg: p.avatarBg,
+        total: p.total,
+        likes: p.likes,
+        hmms: p.hmms,
+        sub: "최고 " + p.best,
+        bg: p.id === "me" ? "#fff3f8" : "#fff",
+        rankBg: p.id === "me" ? "#ff3d86" : "#fff"
+      })),
+      primaryLabel: "새 방 만들기",
+      mostLikedLine: mostLiked.name.replace(" (나)", "") + "님의 " + mostLiked.best.split(" ")[0] + " 표정",
+      mostLikedCount: mostLiked.likes
+    };
+  }
+}
+</script>
+</body>
+</html>

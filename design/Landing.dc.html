@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #fff; font-family: Pretendard, -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif; color: #111318; -webkit-font-smoothing: antialiased; }
+  a { color: #e92570; text-decoration: none; font-weight: 900; }
+  a:hover { color: #111318; }
+</style>
+</helmet>
+
+<div style="width: 390px; min-height: 844px; margin: 0 auto; box-sizing: border-box; padding: 44px 20px 24px; display: flex; flex-direction: column; background: #fff; background-image: radial-gradient(circle at 12% 10%, rgba(255,61,134,.12), transparent 30%), radial-gradient(circle at 92% 4%, rgba(255,215,47,.24), transparent 28%), radial-gradient(circle at 80% 92%, rgba(143,102,255,.12), transparent 30%)">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; height: 44px">
+    <div style="padding: 7px 12px; background: #ffd72f; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 12px; white-space: nowrap; transform: rotate(-3deg)">앱 설치 없이 바로</div>
+    <div style="display: flex; align-items: center; gap: 6px; padding: 6px 11px; background: #fff; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 12px; white-space: nowrap"><span style="width: 8px; height: 8px; border-radius: 999px; background: #ff3d86"></span>2~12명</div>
+  </div>
+
+  <div style="display: flex; justify-content: center; margin-top: 6px">
+    <img src="assets/emoselfie-logo.png" alt="이모셀피 — emotion + selfie" style="width: 216px; height: 216px; display: block; object-fit: contain" />
+  </div>
+
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: -4px; text-align: center">
+    <div style="font-family: Jua, Pretendard, sans-serif; font-size: 27px; line-height: 1.15; letter-spacing: -0.02em">감정 하나, <span style="color: #ff3d86">셀카 한 장</span></div>
+    <div style="font-size: 15px; line-height: 21px; color: #5b5b5b; max-width: 30ch; text-wrap: pretty">화면에 뜬 표정을 제한 시간 안에 지어보세요. AI가 얼마나 닮았는지 점수로 알려줘요.</div>
+  </div>
+
+  <div style="margin-top: 16px; border: 3px solid #111318; border-radius: 26px; background: #fffaf2; box-shadow: 0 8px 0 #111318; padding: 16px 18px 16px; position: relative">
+    <div style="position: absolute; left: 18px; top: -17px; background: #80efd6; border: 2px solid #111318; padding: 7px 12px; border-radius: 999px; font-weight: 900; font-size: 12px; white-space: nowrap; transform: rotate(-3deg)">방 설정</div>
+
+    <div style="display: flex; align-items: baseline; justify-content: space-between; margin-top: 6px">
+      <div style="font-family: Jua, sans-serif; font-size: 18px; white-space: nowrap">몇 라운드로 놀까요?</div>
+      <div style="font-size: 13px; font-weight: 900; color: #6b6b6b; white-space: nowrap">약 {{ estMinutes }}분</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px">
+      <div onClick="{{ pick3 }}" style="height: 66px; border: 3px solid #111318; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; cursor: pointer; user-select: none; background: {{ r3.bg }}; color: {{ r3.fg }}; box-shadow: {{ r3.shadow }}; transform: {{ r3.lift }}">
+        <div style="font-family: Jua, sans-serif; font-size: 24px; line-height: 1">3</div>
+        <div style="font-size: 12px; font-weight: 900">가볍게</div>
+      </div>
+      <div onClick="{{ pick5 }}" style="height: 66px; border: 3px solid #111318; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; cursor: pointer; user-select: none; background: {{ r5.bg }}; color: {{ r5.fg }}; box-shadow: {{ r5.shadow }}; transform: {{ r5.lift }}">
+        <div style="font-family: Jua, sans-serif; font-size: 24px; line-height: 1">5</div>
+        <div style="font-size: 12px; font-weight: 900">기본</div>
+      </div>
+      <div onClick="{{ pick7 }}" style="height: 66px; border: 3px solid #111318; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; cursor: pointer; user-select: none; background: {{ r7.bg }}; color: {{ r7.fg }}; box-shadow: {{ r7.shadow }}; transform: {{ r7.lift }}">
+        <div style="font-family: Jua, sans-serif; font-size: 24px; line-height: 1">7</div>
+        <div style="font-size: 12px; font-weight: 900">끝까지</div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: baseline; justify-content: space-between; margin-top: 16px; padding-top: 14px; border-top: 2px dashed #d9d4cc">
+      <div style="font-family: Jua, sans-serif; font-size: 18px; white-space: nowrap">한 장 찍을 시간은?</div>
+      <div style="font-size: 13px; font-weight: 900; color: #6b6b6b; white-space: nowrap">{{ secondsNote }}</div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px">
+      <div onClick="{{ pickS15 }}" style="height: 58px; border: 3px solid #111318; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; cursor: pointer; user-select: none; background: {{ s15.bg }}; color: {{ s15.fg }}; box-shadow: {{ s15.shadow }}; transform: {{ s15.lift }}">
+        <div style="font-family: Jua, sans-serif; font-size: 21px; line-height: 1">15초</div>
+        <div style="font-size: 12px; font-weight: 900">순간포착</div>
+      </div>
+      <div onClick="{{ pickS20 }}" style="height: 58px; border: 3px solid #111318; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; cursor: pointer; user-select: none; background: {{ s20.bg }}; color: {{ s20.fg }}; box-shadow: {{ s20.shadow }}; transform: {{ s20.lift }}">
+        <div style="font-family: Jua, sans-serif; font-size: 21px; line-height: 1">20초</div>
+        <div style="font-size: 12px; font-weight: 900">기본</div>
+      </div>
+      <div onClick="{{ pickS30 }}" style="height: 58px; border: 3px solid #111318; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; cursor: pointer; user-select: none; background: {{ s30.bg }}; color: {{ s30.fg }}; box-shadow: {{ s30.shadow }}; transform: {{ s30.lift }}">
+        <div style="font-family: Jua, sans-serif; font-size: 21px; line-height: 1">30초</div>
+        <div style="font-size: 12px; font-weight: 900">넉넉하게</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 14px; border: 3px solid #111318; border-radius: 20px; background: #fff; box-shadow: 0 5px 0 #111318; padding: 12px 14px; display: flex; align-items: center; gap: 11px">
+    <div style="width: 40px; height: 40px; border: 2px solid #111318; border-radius: 13px; background: #80efd6; display: flex; align-items: center; justify-content: center; font-size: 19px; flex: none">📷</div>
+    <div style="font-size: 13px; line-height: 18px; font-weight: 700; color: #4a4a4a">카메라가 필요한 게임이에요. 사진은 라운드가 끝나면 바로 삭제돼요.</div>
+  </div>
+
+  <div style="flex: 1; min-height: 10px"></div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <div onClick="{{ create }}" style="height: 60px; border: 3px solid #111318; border-radius: 18px; background: #ff3d86; color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 18px; font-weight: 900; box-shadow: 0 6px 0 #111318; cursor: pointer; user-select: none">
+      <span>{{ ctaText }}</span>
+    </div>
+    <div style="font-size: 13px; line-height: 18px; color: #6b6b6b; text-align: center; text-wrap: pretty">셀카는 제출한 뒤 방 친구들에게만 보이고, 라운드가 끝나면 사라져요</div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 390, &quot;height&quot;: 844}, &quot;defaultRounds&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 5, &quot;min&quot;: 3, &quot;max&quot;: 7, &quot;step&quot;: 2, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;방 설정&quot;}, &quot;defaultSeconds&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;15&quot;, &quot;20&quot;, &quot;30&quot;], &quot;default&quot;: &quot;20&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;방 설정&quot;}, &quot;ctaLabel&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;방 만들기&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;방 설정&quot;}}">
+class Component extends DCLogic {
+  state = { rounds: null, seconds: null };
+
+  get rounds() {
+    return this.state.rounds ?? this.props.defaultRounds ?? 5;
+  }
+
+  get seconds() {
+    return this.state.seconds ?? Number(this.props.defaultSeconds ?? 20);
+  }
+
+  chip(n, current) {
+    const on = current === n;
+    return {
+      bg: on ? "#ffd72f" : "#ffffff",
+      fg: "#111318",
+      shadow: on ? "0 2px 0 #111318" : "0 5px 0 #111318",
+      lift: on ? "translateY(3px)" : "translateY(0)"
+    };
+  }
+
+  renderVals() {
+    const n = this.rounds;
+    const s = this.seconds;
+    const setR = (v) => () => this.setState({ rounds: v });
+    const setS = (v) => () => this.setState({ seconds: v });
+    return {
+      estMinutes: Math.max(2, Math.round((n * (s + 22)) / 60)),
+      secondsNote: s === 15 ? "빠르게 한 판" : s === 30 ? "여유 있게" : "딱 적당해요",
+      r3: this.chip(3, n),
+      r5: this.chip(5, n),
+      r7: this.chip(7, n),
+      pick3: setR(3),
+      pick5: setR(5),
+      pick7: setR(7),
+      s15: this.chip(15, s),
+      s20: this.chip(20, s),
+      s30: this.chip(30, s),
+      pickS15: setS(15),
+      pickS20: setS(20),
+      pickS30: setS(30),
+      ctaText: (this.props.ctaLabel ?? "방 만들기") + " · " + n + "라운드 " + s + "초",
+      create: () => {}
+    };
+  }
+}
+</script>
+</body>
+</html>

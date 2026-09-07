@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #fff; font-family: Pretendard, -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif; color: #111318; -webkit-font-smoothing: antialiased; }
+  a { color: #e92570; text-decoration: none; font-weight: 900; }
+  a:hover { color: #111318; }
+  @keyframes emo-blink { 0%, 100% { opacity: 1 } 50% { opacity: .35 } }
+  @keyframes emo-pop { 0% { transform: scale(.94); opacity: 0 } 100% { transform: scale(1); opacity: 1 } }
+</style>
+</helmet>
+
+<div style="width: 390px; height: 844px; margin: 0 auto; box-sizing: border-box; padding: 44px 20px 24px; display: flex; flex-direction: column; background: #fffaf2; background-image: radial-gradient(circle at 12% 6%, rgba(255,215,47,.24), transparent 26%), radial-gradient(circle at 92% 92%, rgba(17,19,24,.06), transparent 30%)">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; height: 44px">
+    <div style="display: flex; align-items: center; gap: 7px; padding: 7px 11px; background: #fff; border: 2px solid #111318; border-radius: 999px; box-shadow: 0 3px 0 #111318; white-space: nowrap; flex: none">
+      <span style="font-size: 15px">👥</span>
+      <span style="font-weight: 900; font-size: 13px; font-variant-numeric: tabular-nums">{{ submittedText }}</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 7px; padding: 7px 12px; border: 2px solid #111318; border-radius: 999px; box-shadow: 0 3px 0 #111318; white-space: nowrap; flex: none; background: {{ timerBadge.bg }}; color: {{ timerBadge.fg }}">
+      <span style="width: 9px; height: 9px; border-radius: 999px; background: {{ timerBadge.dot }}; animation: emo-blink 1s steps(2, start) infinite"></span>
+      <span style="font-family: Jua, Pretendard, sans-serif; font-size: 18px; line-height: 1; font-variant-numeric: tabular-nums">{{ timerText }}</span>
+    </div>
+  </div>
+
+  <div style="margin-top: 12px; border: 3px solid #111318; border-radius: 26px; box-shadow: 0 8px 0 #111318; padding: 16px; display: flex; align-items: center; gap: 14px; position: relative; background: {{ topic.color }}; color: {{ topic.ink }}">
+    <div style="position: absolute; left: 18px; top: -17px; background: #ffd72f; border: 2px solid #111318; padding: 6px 11px; border-radius: 999px; font-weight: 900; font-size: 12px; color: #111318; white-space: nowrap; transform: rotate(-3deg)">{{ roundText }}</div>
+    <div style="width: 76px; height: 76px; border: 3px solid #111318; border-radius: 22px; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 40px; flex: none">{{ topic.emoji }}</div>
+    <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0">
+      <div style="font-size: 12px; font-weight: 900; letter-spacing: 0.1em; white-space: nowrap">이 감정을 셀카로!</div>
+      <div style="font-family: Jua, Pretendard, sans-serif; font-size: 34px; line-height: 1.05">{{ topic.name }}</div>
+      <div style="font-size: 14px; line-height: 19px">{{ topic.hint }}</div>
+    </div>
+  </div>
+
+  <div style="flex: 1; min-height: 0; margin-top: 16px; border: 3px solid #111318; border-radius: 26px; background: #f1eee9; box-shadow: 0 8px 0 #111318; overflow: hidden; position: relative">
+    {{ stageInner }}
+  </div>
+
+  <div style="margin-top: 18px; display: flex; flex-direction: column; gap: 10px; align-items: center">
+    {{ actionRow }}
+    <div style="font-size: 13px; line-height: 18px; color: #6b6b6b; text-align: center; text-wrap: pretty">{{ footNote }}</div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 390, &quot;height&quot;: 844}, &quot;emotion&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;기쁨&quot;, &quot;분노&quot;, &quot;놀람&quot;, &quot;슬픔&quot;, &quot;시크&quot;, &quot;무서움&quot;, &quot;우웩&quot;], &quot;default&quot;: &quot;놀람&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;라운드&quot;}, &quot;round&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 3, &quot;min&quot;: 1, &quot;max&quot;: 7, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;라운드&quot;}, &quot;rounds&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 5, &quot;min&quot;: 3, &quot;max&quot;: 7, &quot;step&quot;: 2, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;라운드&quot;}, &quot;seconds&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 20, &quot;min&quot;: 15, &quot;max&quot;: 30, &quot;step&quot;: 5, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;라운드&quot;}, &quot;players&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 10, &quot;min&quot;: 2, &quot;max&quot;: 12, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;방&quot;}, &quot;submitted&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 4, &quot;min&quot;: 0, &quot;max&quot;: 12, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;방&quot;}}">
+class Component extends DCLogic {
+  state = { phase: "shoot", t: null };
+
+  componentDidMount() {
+    this.tick();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._iv);
+  }
+
+  tick() {
+    clearInterval(this._iv);
+    this._iv = setInterval(() => {
+      this.setState((s) => {
+        const t = (s.t ?? this.seconds()) - 1;
+        if (t <= 0) {
+          clearInterval(this._iv);
+          return { t: 0 };
+        }
+        return { t };
+      });
+    }, 1000);
+  }
+
+  seconds() {
+    return this.props.seconds ?? 20;
+  }
+
+  topics() {
+    return {
+      "기쁨": { emoji: "😆", color: "#ffd72f", ink: "#111318", hint: "방금 좋은 소식 들은 것처럼" },
+      "분노": { emoji: "😠", color: "#ff5a47", ink: "#111318", hint: "누가 새치기한 것처럼" },
+      "놀람": { emoji: "😲", color: "#8f66ff", ink: "#ffffff", hint: "뒤에서 누가 부른 것처럼" },
+      "슬픔": { emoji: "😢", color: "#5ac8ff", ink: "#111318", hint: "마지막 한 조각을 놓친 것처럼" },
+      "시크": { emoji: "😐", color: "#80efd6", ink: "#111318", hint: "아무 일도 없던 것처럼" },
+      "무서움": { emoji: "😨", color: "#ff3d86", ink: "#ffffff", hint: "불 꺼진 복도를 혼자 걷는 것처럼" },
+      "우웩": { emoji: "🤢", color: "#b8f16a", ink: "#111318", hint: "상한 우유를 한 입 마신 것처럼" }
+    };
+  }
+
+  el(tag, style, children) {
+    return React.createElement(tag, { style }, children);
+  }
+
+  stage(phase) {
+    if (phase === "shoot") {
+      return React.createElement(
+        "div",
+        { key: "shoot", style: { position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 10, textAlign: "center", padding: 20 } },
+        React.createElement("img", { src: "assets/sample-selfie.png", alt: "", style: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 } }),
+        React.createElement(
+          "div",
+          { style: { position: "relative", padding: "9px 14px", background: "rgba(255,255,255,.94)", border: "2.5px solid #111318", borderRadius: 999, fontWeight: 900, fontSize: 13, boxShadow: "0 3px 0 #111318", whiteSpace: "nowrap" } },
+          "제출 전까지는 나만 볼 수 있어요"
+        )
+      );
+    }
+    return React.createElement(
+      "div",
+      { key: "review", style: { position: "absolute", inset: 0, animation: "emo-pop .28s ease-out both", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", paddingBottom: 16 } },
+      React.createElement("img", { src: "assets/sample-selfie.png", alt: "", style: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" } }),
+      React.createElement(
+        "div",
+        { style: { position: "relative", padding: "9px 14px", background: "rgba(255,255,255,.95)", border: "2.5px solid #111318", borderRadius: 999, fontWeight: 900, fontSize: 13, boxShadow: "0 3px 0 #111318", whiteSpace: "nowrap" } },
+        "이 사진으로 제출할까요?"
+      )
+    );
+  }
+
+  actions(phase) {
+    const primary = this.props.emotion === "무서움" ? "#111318" : "#ff3d86";
+    if (phase === "shoot") {
+      return React.createElement(
+        "div",
+        { key: "a-shoot", style: { display: "flex", alignItems: "center", justifyContent: "center", width: "100%" } },
+        React.createElement(
+          "div",
+          {
+            onClick: () => this.setState({ phase: "review" }),
+            style: { width: 88, height: 88, borderRadius: 999, border: "4px solid #111318", background: primary, boxShadow: "0 6px 0 #111318", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", userSelect: "none" }
+          },
+          React.createElement("div", { style: { width: 48, height: 48, borderRadius: 999, border: "7px solid #fff" } })
+        )
+      );
+    }
+    const btn = (label, bg, fg, onClick) =>
+      React.createElement(
+        "div",
+        {
+          onClick,
+          style: { flex: 1, height: 58, border: "3px solid #111318", borderRadius: 18, background: bg, color: fg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17, fontWeight: 900, boxShadow: "0 5px 0 #111318", cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }
+        },
+        label
+      );
+    return React.createElement(
+      "div",
+      { key: "a-review", style: { display: "flex", gap: 12, width: "100%" } },
+      btn("다시 찍기", "#fff", "#111318", () => this.setState({ phase: "shoot" })),
+      btn("제출하기", primary, "#ffffff", () => {})
+    );
+  }
+
+  renderVals() {
+    const total = this.props.players ?? 10;
+    const t = this.state.t ?? this.seconds();
+    const phase = this.state.phase;
+    const hurry = t <= 10;
+    const key = this.props.emotion ?? "놀람";
+    const map = this.topics();
+    const topic = Object.assign({ name: key }, map[key] || map["놀람"]);
+
+    return {
+      topic,
+      roundText: (this.props.round ?? 3) + " / " + (this.props.rounds ?? 5) + " 라운드",
+      submittedText: (this.props.submitted ?? 4) + " / " + total + " 제출",
+      timerText: "00:" + String(Math.max(0, t)).padStart(2, "0"),
+      timerBadge: hurry
+        ? { bg: "#ff3d86", fg: "#ffffff", dot: "#ffffff" }
+        : { bg: "#fff", fg: "#111318", dot: "#ff3d86" },
+      stageInner: this.stage(phase),
+      actionRow: this.actions(phase),
+      footNote:
+        phase === "review"
+          ? "제출하면 바로 결과 화면으로 넘어가요"
+          : "시간 안에 제출한 사진만 채점돼요"
+    };
+  }
+}
+</script>
+</body>
+</html>
