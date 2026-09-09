@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #fff; font-family: Pretendard, -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif; color: #111318; -webkit-font-smoothing: antialiased; }
+  a { color: #e92570; text-decoration: none; font-weight: 900; }
+  a:hover { color: #111318; }
+</style>
+</helmet>
+
+<div style="width: 390px; height: 844px; margin: 0 auto; box-sizing: border-box; padding: 44px 20px 24px; display: flex; flex-direction: column; background: #fff; background-image: radial-gradient(circle at 10% 6%, rgba(255,215,47,.22), transparent 26%), radial-gradient(circle at 94% 88%, rgba(255,61,134,.12), transparent 30%)">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; height: 44px">
+    <div style="display: flex; align-items: center; gap: 8px">
+      <div style="width: 34px; height: 34px; border: 2px solid #111318; border-radius: 11px; background: #ffd72f; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900">‹</div>
+      <div style="font-size: 14px; font-weight: 900; color: #6b6b6b">나가기</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 6px; padding: 6px 11px; background: #80efd6; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 12px; white-space: nowrap">대기 중</div>
+  </div>
+
+  <div style="margin-top: 10px">
+    <div style="font-family: Jua, Pretendard, sans-serif; font-size: 27px; line-height: 1.15; letter-spacing: -0.02em; white-space: nowrap">{{ settingsSummary }}</div>
+    <div style="font-size: 14px; line-height: 20px; color: #5b5b5b; margin-top: 2px">셀카 한 장으로 결정 · 최대 12명까지 들어올 수 있어요</div>
+  </div>
+
+  <sc-if value="{{ isHost }}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; gap: 8px; margin-top: 12px">
+      <div style="height: 38px; padding: 0 13px; border: 2.5px solid #111318; border-radius: 999px; background: #fff; display: flex; align-items: center; font-size: 13px; font-weight: 900; box-shadow: 0 3px 0 #111318; cursor: pointer; user-select: none; white-space: nowrap">설정 변경</div>
+      <div style="height: 38px; padding: 0 13px; border: 2.5px solid #111318; border-radius: 999px; background: #fff; display: flex; align-items: center; font-size: 13px; font-weight: 900; color: #6b6b6b; box-shadow: 0 3px 0 #111318; cursor: pointer; user-select: none; white-space: nowrap; margin-left: auto">방 닫기</div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isHost }}" hint-placeholder-val="{{ true }}">
+    <div onClick="{{ copyLink }}" style="margin-top: 14px; border: 3px solid #111318; border-radius: 22px; background: #fffaf2; box-shadow: 0 6px 0 #111318; padding: 14px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none">
+      <div style="width: 44px; height: 44px; border: 2px solid #111318; border-radius: 14px; background: #ff3d86; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; flex: none">🔗</div>
+      <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+        <div style="font-size: 15px; font-weight: 900; white-space: nowrap">{{ copyTitle }}</div>
+        <div style="font-size: 13px; color: #6b6b6b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ inviteUrl }}</div>
+      </div>
+      <div style="margin-left: auto; padding: 9px 13px; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 13px; flex: none; white-space: nowrap; background: {{ copyBtn.bg }}; color: {{ copyBtn.fg }}; box-shadow: {{ copyBtn.shadow }}; transform: {{ copyBtn.lift }}">{{ copyBtn.label }}</div>
+    </div>
+  </sc-if>
+
+  <div style="display: flex; align-items: baseline; justify-content: space-between; margin-top: 18px">
+    <div style="font-family: Jua, sans-serif; font-size: 20px; white-space: nowrap; flex: none">방에 있는 사람</div>
+    <div style="font-size: 13px; font-weight: 900; color: #6b6b6b; white-space: nowrap; flex: none">{{ countLabel }}</div>
+  </div>
+
+  <div style="flex: 1; min-height: 0; margin-top: 10px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding-right: 2px">
+    <sc-for list="{{ players }}" as="p" hint-placeholder-count="6">
+      <div style="border: 2.5px solid #111318; border-radius: 18px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; flex: none; background: {{ p.rowBg }}">
+        <div style="width: 42px; height: 42px; border: 2px solid #111318; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 21px; flex: none; background: {{ p.avatarBg }}">{{ p.emoji }}</div>
+        <div style="display: flex; flex-direction: column; gap: 1px; min-width: 0">
+          <div style="font-size: 15px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{ p.name }}</div>
+          <div style="font-size: 12px; font-weight: 700; color: #6b6b6b; white-space: nowrap">{{ p.sub }}</div>
+        </div>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 6px; padding: 7px 11px; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 12px; flex: none; white-space: nowrap; background: {{ p.badgeBg }}; color: {{ p.badgeFg }}">
+          <span>{{ p.badgeIcon }}</span><span>{{ p.badge }}</span>
+        </div>
+      </div>
+    </sc-for>
+    <div style="border: 2.5px dashed #c9c4bc; border-radius: 18px; background: #fffaf2; padding: 12px; display: flex; align-items: center; gap: 10px; flex: none">
+      <div style="width: 42px; height: 42px; border: 2px dashed #c9c4bc; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #a49f97; flex: none">+</div>
+      <div style="font-size: 14px; font-weight: 900; color: #8b867e">링크를 받은 친구는 여기에 나타나요</div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 16px">
+    <sc-if value="{{ isHost }}" hint-placeholder-val="{{ true }}">
+      <div onClick="{{ start }}" style="height: 60px; border-radius: 18px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 18px; font-weight: 900; cursor: pointer; user-select: none; border: 3px solid {{ startBtn.line }}; background: {{ startBtn.bg }}; color: {{ startBtn.fg }}; box-shadow: {{ startBtn.shadow }}">{{ startBtn.label }}</div>
+      <div style="font-size: 13px; line-height: 18px; color: #6b6b6b; text-align: center; text-wrap: pretty">{{ startHint }}</div>
+    </sc-if>
+    <sc-if value="{{ isGuest }}" hint-placeholder-val="{{ false }}">
+      <div style="height: 60px; border: 3px solid #c9c4bc; border-radius: 18px; background: #eae7e2; color: #8b8b8b; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 900">방장이 시작하기를 기다리는 중</div>
+      <div style="font-size: 13px; line-height: 18px; color: #6b6b6b; text-align: center">시작하면 모든 사람에게 감정 카드가 동시에 열려요</div>
+    </sc-if>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 390, &quot;height&quot;: 844}, &quot;isHost&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;방&quot;}, &quot;rounds&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 5, &quot;min&quot;: 3, &quot;max&quot;: 7, &quot;step&quot;: 2, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;방&quot;}, &quot;seconds&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 20, &quot;min&quot;: 15, &quot;max&quot;: 30, &quot;step&quot;: 5, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;방&quot;}, &quot;inviteSlug&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;a7f3k9&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;방&quot;}}">
+class Component extends DCLogic {
+  state = { copied: false };
+
+  base() {
+    return [
+      { id: "h", name: "민지 (방장)", emoji: "😆", avatarBg: "#ffd72f", state: "ready" },
+      { id: "a", name: "지수", emoji: "🙂", avatarBg: "#ff3d86", state: "ready" },
+      { id: "b", name: "현우", emoji: "😎", avatarBg: "#8f66ff", state: "ready" },
+      { id: "c", name: "태호", emoji: "😲", avatarBg: "#5ac8ff", state: "ready" },
+      { id: "d", name: "윤아", emoji: "😨", avatarBg: "#80efd6", state: "ready" },
+      { id: "e", name: "서준", emoji: "😐", avatarBg: "#b8f16a", state: "joining" },
+      { id: "me", name: "수아 (나)", emoji: "🤢", avatarBg: "#ff5a47", state: "ready" }
+    ];
+  }
+
+  decorate(p) {
+    const map = {
+      ready: { sub: "촬영 준비 됨", badge: "준비 완료", badgeIcon: "✓", badgeBg: "#80efd6", badgeFg: "#111318" },
+      joining: { sub: "방금 입장", badge: "입장 중", badgeIcon: "·", badgeBg: "#f1eee9", badgeFg: "#6b6b6b" }
+    };
+    return Object.assign({ rowBg: p.id === "me" ? "#fff3f8" : "#fff" }, p, map[p.state] || map.joining);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this._t);
+  }
+
+  renderVals() {
+    const isHost = this.props.isHost ?? true;
+    const rounds = this.props.rounds ?? 5;
+    const seconds = this.props.seconds ?? 20;
+    const players = this.base().map((p) => this.decorate(p));
+    const canStart = players.length >= 2;
+    const copied = this.state.copied;
+
+    return {
+      settingsSummary: rounds + "라운드 · " + seconds + "초",
+      isHost,
+      isGuest: !isHost,
+      players,
+      countLabel: players.length + " / 12명",
+      inviteUrl: "emoselfie.app/r/" + (this.props.inviteSlug ?? "a7f3k9"),
+      copyTitle: copied ? "링크를 복사했어요!" : "초대 링크 복사하기",
+      copyBtn: {
+        label: copied ? "복사됨" : "복사",
+        bg: copied ? "#80efd6" : "#ffd72f",
+        fg: "#111318",
+        shadow: copied ? "0 2px 0 #111318" : "0 4px 0 #111318",
+        lift: copied ? "translateY(2px)" : "translateY(0)"
+      },
+      copyLink: () => {
+        this.setState({ copied: true });
+        clearTimeout(this._t);
+        this._t = setTimeout(() => this.setState({ copied: false }), 1800);
+      },
+      startBtn: canStart
+        ? { label: "시작하기 · " + rounds + "라운드", bg: "#ff3d86", fg: "#ffffff", line: "#111318", shadow: "0 6px 0 #111318" }
+        : { label: "2명 이상 모이면 시작", bg: "#eae7e2", fg: "#8b8b8b", line: "#c9c4bc", shadow: "none" },
+      startHint: canStart
+        ? "시작하면 모든 사람에게 첫 감정 카드가 동시에 열려요"
+        : "링크를 보내 한 명만 더 부르면 시작할 수 있어요",
+      start: () => {}
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>emoselfie UI Kit</title>
+  <link rel="stylesheet" href="./emoselfie-components.css" />
+</head>
+<body>
+  <main class="page-shell">
+
+    <section class="brand-hero">
+      <div class="brand-copy">
+        <div class="eyebrow">EMOTION + SELFIE GAME</div>
+        <h1>emoselfie</h1>
+        <p>귀엽고 살짝 과장된 표정, 말풍선, 두꺼운 외곽선, 스티커 감성을 웹 UI로 옮긴 컴포넌트 키트.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary">게임 시작</button>
+          <button class="btn btn-ghost">친구 초대</button>
+        </div>
+      </div>
+      <div class="logo-card">
+        <img src="./emoselfie-logo-reference.png" alt="emoselfie reference logo"/>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <span class="kicker">01</span>
+          <h2>감정 미션 카드</h2>
+        </div>
+        <span class="caption">오늘의 표정 미션</span>
+      </div>
+
+      <div class="mission-card">
+        <div class="mission-sticker">오늘의 감정</div>
+        <div class="mission-emoji">😤</div>
+        <div class="mission-copy">
+          <p class="mission-label">MISSION</p>
+          <h3>억울해서 말문이 막힌 표정</h3>
+          <p>10초 안에 가장 “진짜 같은” 표정을 찍어보세요.</p>
+          <div class="timer">
+            <span class="timer-dot"></span>
+            00:10
+          </div>
+        </div>
+        <button class="capture-btn" aria-label="셀피 촬영">
+          <span class="camera-ring"></span>
+        </button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <span class="kicker">02</span>
+          <h2>감정 칩</h2>
+        </div>
+        <span class="caption">선택 / 결과 / 필터에 활용</span>
+      </div>
+
+      <div class="chip-wrap">
+        <button class="emotion-chip is-active"><span>🤣</span> 빵터짐</button>
+        <button class="emotion-chip"><span>😡</span> 극대노</button>
+        <button class="emotion-chip"><span>😭</span> 오열</button>
+        <button class="emotion-chip"><span>😳</span> 당황</button>
+        <button class="emotion-chip"><span>😏</span> 능글</button>
+        <button class="emotion-chip"><span>🥹</span> 벅참</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <span class="kicker">03</span>
+          <h2>AI 판정 카드</h2>
+        </div>
+        <span class="caption">게임의 핵심 결과 UI</span>
+      </div>
+
+      <div class="score-grid">
+        <article class="score-card winner">
+          <div class="rank-badge">1st</div>
+          <div class="avatar avatar-pink">😏</div>
+          <div class="score-copy">
+            <p class="player-name">민지</p>
+            <h3>96<span>점</span></h3>
+            <p class="judge-comment">“이 정도면 진짜 서운한 일 있었음”</p>
+          </div>
+          <div class="meter">
+            <div class="meter-fill" style="width:96%"></div>
+          </div>
+          <div class="card-footer">
+            <span>억울함 싱크로율</span>
+            <strong>+100P</strong>
+          </div>
+        </article>
+
+        <article class="score-card">
+          <div class="rank-badge muted">2nd</div>
+          <div class="avatar avatar-yellow">😐</div>
+          <div class="score-copy">
+            <p class="player-name">준호</p>
+            <h3>81<span>점</span></h3>
+            <p class="judge-comment">“표정은 억울한데 눈빛은 퇴근 중”</p>
+          </div>
+          <div class="meter">
+            <div class="meter-fill" style="width:81%"></div>
+          </div>
+          <div class="card-footer">
+            <span>억울함 싱크로율</span>
+            <strong>+50P</strong>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <span class="kicker">04</span>
+          <h2>플레이어 / 순위 컴포넌트</h2>
+        </div>
+        <span class="caption">룸 / 대기실 / 결과 화면</span>
+      </div>
+
+      <div class="leaderboard">
+        <div class="leader-row me">
+          <span class="place">1</span>
+          <span class="mini-avatar">😎</span>
+          <div class="leader-meta">
+            <strong>나</strong>
+            <span>표정력 만렙</span>
+          </div>
+          <strong class="points">1,240P</strong>
+        </div>
+        <div class="leader-row">
+          <span class="place">2</span>
+          <span class="mini-avatar">🤪</span>
+          <div class="leader-meta">
+            <strong>수빈</strong>
+            <span>분노 전문</span>
+          </div>
+          <strong class="points">980P</strong>
+        </div>
+        <div class="leader-row">
+          <span class="place">3</span>
+          <span class="mini-avatar">🥹</span>
+          <div class="leader-meta">
+            <strong>동현</strong>
+            <span>오열 장인</span>
+          </div>
+          <strong class="points">760P</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <span class="kicker">05</span>
+          <h2>버튼 / 상태 UI</h2>
+        </div>
+        <span class="caption">강한 CTA + 장난스러운 피드백</span>
+      </div>
+
+      <div class="button-board">
+        <button class="btn btn-primary">셀피 찍기 📸</button>
+        <button class="btn btn-yellow">AI 판정 보기 ✨</button>
+        <button class="btn btn-black">다시 도전</button>
+        <button class="btn btn-ghost">나가기</button>
+      </div>
+
+      <div class="toast">
+        <div class="toast-icon">🤖</div>
+        <div>
+          <strong>AI 판정 완료!</strong>
+          <p>“표정이 너무 진심이라 잠깐 걱정했습니다.”</p>
+        </div>
+        <button class="toast-close" aria-label="닫기">×</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <span class="kicker">06</span>
+          <h2>모바일 앱 카드</h2>
+        </div>
+        <span class="caption">홈 화면용 예시</span>
+      </div>
+
+      <div class="phone">
+        <div class="phone-top">
+          <div>
+            <p class="hello">오늘도 얼굴 쓸 준비 됐나요?</p>
+            <h3>표정 한 판 가자 😝</h3>
+          </div>
+          <div class="profile-bubble">😎</div>
+        </div>
+
+        <div class="quick-card">
+          <div class="quick-sticker">HOT</div>
+          <p>오늘의 인기 감정</p>
+          <h4>“아는 척했는데 모르는 사람”</h4>
+          <button class="btn btn-primary full">도전하기</button>
+        </div>
+
+        <div class="mini-title">친구방</div>
+        <div class="room-card">
+          <div class="room-avatars">
+            <span>😏</span><span>🤪</span><span>🥹</span>
+          </div>
+          <div class="room-copy">
+            <strong>퇴근 전 한 판</strong>
+            <span>3 / 6명 · 진행 중</span>
+          </div>
+          <button class="room-arrow">→</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

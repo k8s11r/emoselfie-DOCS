@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #fff; font-family: Pretendard, -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif; color: #111318; -webkit-font-smoothing: antialiased; }
+  a { color: #e92570; text-decoration: none; font-weight: 900; }
+  a:hover { color: #111318; }
+  @keyframes emo-heart { 0% { transform: scale(1) } 40% { transform: scale(1.5) rotate(-8deg) } 100% { transform: scale(1) } }
+  @keyframes emo-pop { 0% { transform: scale(.94); opacity: 0 } 100% { transform: scale(1); opacity: 1 } }
+  @keyframes emo-float { 0% { transform: translateY(0) scale(.8); opacity: 1 } 100% { transform: translateY(-70px) scale(1.5); opacity: 0 } }
+  @keyframes emo-tick { 0%, 100% { opacity: 1 } 50% { opacity: .3 } }
+</style>
+</helmet>
+
+<div style="width: 390px; height: 844px; margin: 0 auto; box-sizing: border-box; padding: 44px 20px 24px; display: flex; flex-direction: column; background: #fffaf2; background-image: radial-gradient(circle at 10% 6%, rgba(255,215,47,.26), transparent 26%), radial-gradient(circle at 92% 92%, rgba(143,102,255,.16), transparent 30%)">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; height: 44px">
+    <div style="display: flex; align-items: center; gap: 7px; padding: 7px 11px; background: #ffd72f; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 12px; white-space: nowrap; flex: none; transform: rotate(-3deg)">{{ roundText }}</div>
+    <div style="display: flex; align-items: center; gap: 7px; padding: 7px 11px; border: 2px solid #111318; border-radius: 999px; font-weight: 900; font-size: 12px; white-space: nowrap; flex: none; background: {{ statusBadge.bg }}; color: {{ statusBadge.fg }}">{{ statusBadge.label }}</div>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px">
+    <div style="display: flex; align-items: center; gap: 8px; padding: 7px 11px 7px 8px; border: 2.5px solid #111318; border-radius: 999px; box-shadow: 0 3px 0 #111318; white-space: nowrap; flex: none; background: {{ topic.color }}; color: {{ topic.ink }}">
+      <span style="font-size: 17px">{{ topic.emoji }}</span>
+      <span style="font-family: Jua, Pretendard, sans-serif; font-size: 17px; line-height: 1">{{ topic.name }}</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 6px; margin-left: auto; white-space: nowrap">
+      <span style="font-size: 12px; font-weight: 900; color: #6b6b6b">내 점수</span>
+      <span style="font-family: Jua, sans-serif; font-size: 26px; line-height: 1; color: #e92570; font-variant-numeric: tabular-nums">{{ myScore }}</span>
+      <span style="font-size: 12px; font-weight: 900; color: #6b6b6b">{{ myRankText }}</span>
+    </div>
+  </div>
+
+  <div style="flex: 1; min-height: 0; margin-top: 12px; border: 3px solid #111318; border-radius: 28px; box-shadow: 0 8px 0 #111318; overflow: hidden; position: relative; background: {{ current.photoBg }}">
+    <div style="position: absolute; inset: 0; animation: emo-pop .28s ease-out both">
+      <img src="assets/sample-selfie.png" alt="제출된 셀카" style="width: 100%; height: 100%; object-fit: cover; display: block; filter: {{ current.filter }}" />
+    </div>
+
+    <div onClick="{{ prev }}" style="position: absolute; left: 0; top: 0; bottom: 0; width: 34%; display: flex; align-items: center; justify-content: flex-start; padding-left: 10px; cursor: pointer; user-select: none">
+      <div style="width: 38px; height: 38px; border: 2.5px solid #111318; border-radius: 999px; background: rgba(255,255,255,.9); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; box-shadow: 0 3px 0 #111318">‹</div>
+    </div>
+    <div onClick="{{ next }}" style="position: absolute; right: 0; top: 0; bottom: 0; width: 34%; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; cursor: pointer; user-select: none">
+      <div style="width: 38px; height: 38px; border: 2.5px solid #111318; border-radius: 999px; background: rgba(255,255,255,.9); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; box-shadow: 0 3px 0 #111318">›</div>
+    </div>
+
+    <div style="position: absolute; left: 12px; top: 12px; height: 34px; padding: 0 12px; border: 2.5px solid #111318; border-radius: 999px; display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 13px; white-space: nowrap; box-shadow: 0 3px 0 #111318; background: {{ current.rankBg }}; color: {{ current.rankFg }}">
+      <span style="font-family: Jua, sans-serif; font-size: 15px">{{ current.rankLabel }}</span>
+      <span>{{ current.name }}</span>
+    </div>
+
+    <div style="position: absolute; right: 12px; top: 12px; height: 34px; padding: 0 12px; border: 2.5px solid #111318; border-radius: 999px; background: #fff; display: flex; align-items: center; gap: 4px; box-shadow: 0 3px 0 #111318">
+      <span style="font-family: Jua, sans-serif; font-size: 19px; line-height: 1; font-variant-numeric: tabular-nums">{{ current.score }}</span>
+      <span style="font-size: 11px; font-weight: 900; color: #6b6b6b">점</span>
+    </div>
+
+    <div style="position: absolute; left: 0; right: 0; bottom: 14px; display: flex; flex-direction: column; align-items: center; gap: 9px">
+      <div style="display: flex; align-items: center; gap: 8px">
+        <div onClick="{{ current.like }}" style="height: 52px; padding: 0 20px; border-radius: 999px; display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 900; user-select: none; position: relative; white-space: nowrap; border: 3px solid {{ current.likeLine }}; background: {{ current.likeBg }}; color: {{ current.likeFg }}; box-shadow: {{ current.likeShadow }}; cursor: {{ current.likeCursor }}">
+          <span style="font-variant-numeric: tabular-nums">{{ current.likeLabel }}</span>
+          <span style="font-size: 20px; animation: {{ current.likeAnim }}">♥</span>
+          <span style="position: absolute; left: 50%; bottom: 100%; font-size: 22px; pointer-events: none; animation: {{ current.floatAnim }}; opacity: 0">♥</span>
+        </div>
+        <div onClick="{{ current.hmm }}" style="height: 52px; padding: 0 18px; border-radius: 999px; display: flex; align-items: center; gap: 7px; font-size: 16px; font-weight: 900; user-select: none; position: relative; white-space: nowrap; border: 3px solid {{ current.hmmLine }}; background: {{ current.hmmBg }}; color: {{ current.hmmFg }}; box-shadow: {{ current.hmmShadow }}; cursor: {{ current.hmmCursor }}">
+          <span style="font-variant-numeric: tabular-nums">{{ current.hmmLabel }}</span>
+          <span style="font-family: Jua, Pretendard, sans-serif; font-size: 21px; line-height: 1; animation: {{ current.hmmAnim }}">?</span>
+          <span style="position: absolute; left: 50%; bottom: 100%; font-family: Jua, Pretendard, sans-serif; font-size: 22px; pointer-events: none; animation: {{ current.hmmFloat }}; opacity: 0">?</span>
+        </div>
+      </div>
+      <div style="padding: 5px 11px; border: 2px solid #111318; border-radius: 999px; background: rgba(255,255,255,.92); font-size: 11px; font-weight: 900; white-space: nowrap">{{ current.reactionNote }}</div>
+      <div style="display: flex; align-items: center; gap: 5px">{{ dots }}</div>
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: baseline; justify-content: space-between; margin-top: 14px">
+    <div style="font-family: Jua, sans-serif; font-size: 17px; white-space: nowrap; flex: none">실시간 순위</div>
+    <div style="font-size: 12px; font-weight: 900; color: #6b6b6b; white-space: nowrap; flex: none">{{ arrivedText }}</div>
+  </div>
+
+  <div data-rail="rank" style="height: 92px; margin-top: 4px; overflow-x: auto; overflow-y: hidden; margin-left: -20px; margin-right: -20px; padding: 0 13px; scrollbar-width: none">
+    <div style="position: relative; height: 88px; transition: width .35s ease; width: {{ railWidth }}">
+    <sc-for list="{{ rail }}" as="r" hint-placeholder-count="10">
+      <div onClick="{{ r.open }}" style="position: absolute; top: 10px; left: 7px; width: 62px; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; user-select: none; transition: transform .5s cubic-bezier(.22,1.2,.36,1), opacity .3s ease; transform: {{ r.transform }}; opacity: {{ r.opacity }}">
+        <div style="width: 58px; height: 58px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 22px; position: relative; border: 3px solid {{ r.line }}; background: {{ r.bg }}; box-shadow: {{ r.shadow }}">
+          <img src="assets/sample-selfie.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 15px; display: {{ r.thumbShow }}; filter: {{ r.filter }}" />
+          <span style="position: relative">{{ r.emoji }}</span>
+          <span style="position: absolute; left: -5px; top: -7px; min-width: 22px; height: 22px; padding: 0 4px; box-sizing: border-box; border: 2px solid #111318; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: Jua, sans-serif; font-size: 12px; background: {{ r.rankBg }}; color: {{ r.rankFg }}">{{ r.rank }}</span>
+          <span style="position: absolute; right: -6px; bottom: -6px; height: 20px; padding: 0 5px; border: 2px solid #111318; border-radius: 999px; background: #fff; display: flex; align-items: center; gap: 2px; font-size: 10px; font-weight: 900; color: #e92570; white-space: nowrap">♥{{ r.likes }}</span>
+        </div>
+        <div style="font-size: 11px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 62px">{{ r.name }}</div>
+      </div>
+    </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px">
+    <div onClick="{{ skip }}" style="height: 56px; border-radius: 18px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 17px; font-weight: 900; user-select: none; position: relative; overflow: hidden; cursor: pointer; border: 3px solid {{ skipBtn.line }}; background: {{ skipBtn.bg }}; color: {{ skipBtn.fg }}; box-shadow: {{ skipBtn.shadow }}">
+      <span style="white-space: nowrap">{{ skipBtn.label }}</span>
+      <span style="display: inline-flex; align-items: center; gap: 5px; height: 30px; padding: 0 10px; border: 2px solid {{ skipBtn.chipLine }}; border-radius: 999px; background: {{ skipBtn.chipBg }}; color: {{ skipBtn.chipFg }}; font-family: Jua, Pretendard, sans-serif; font-size: 17px; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap">
+        <span style="width: 7px; height: 7px; border-radius: 999px; background: {{ skipBtn.chipFg }}; animation: emo-tick 1s steps(2, start) infinite"></span>{{ skipBtn.clockText }}
+      </span>
+      <span style="position: absolute; left: 0; bottom: 0; height: 4px; background: {{ skipBtn.chipFg }}; opacity: .55; transition: width 1s linear; width: {{ skipBtn.progress }}"></span>
+    </div>
+    <div style="font-size: 12px; line-height: 17px; color: #6b6b6b; text-align: center; text-wrap: pretty">{{ footNote }}</div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 390, &quot;height&quot;: 844}, &quot;emotion&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;기쁨&quot;, &quot;분노&quot;, &quot;놀람&quot;, &quot;슬픔&quot;, &quot;시크&quot;, &quot;무서움&quot;, &quot;우웩&quot;], &quot;default&quot;: &quot;놀람&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;라운드&quot;}, &quot;round&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 3, &quot;min&quot;: 1, &quot;max&quot;: 7, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;라운드&quot;}, &quot;rounds&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 5, &quot;min&quot;: 3, &quot;max&quot;: 7, &quot;step&quot;: 2, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;라운드&quot;}, &quot;players&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 10, &quot;min&quot;: 2, &quot;max&quot;: 10, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;방&quot;}, &quot;skipReady&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;default&quot;: 2, &quot;min&quot;: 0, &quot;max&quot;: 9, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;방&quot;}}">
+class Component extends DCLogic {
+  // cursor는 참가자 id로 관리한다 — 순위가 재정렬돼도 보던 사진이 바뀌지 않는다 (C-2)
+  // 타임라인 기준점을 state에 둔다 — 로직 인스턴스가 다시 만들어져도 진행이 이어진다
+  // 진행은 누적 경과(ms)로 관리한다 — tick이 끊기면 멈출 뿐, 건너뛰지 않는다
+  state = { elapsed: 0, doneMs: null, arrived: 1, liked: {}, hmmed: {}, bump: null, hmmBump: null, viewT: null, cursorId: "me", skipped: false };
+
+  roster() {
+    return [
+      { id: "me", name: "수아 (나)", emoji: "😆", photoBg: "#fdf1cf", filter: "none", score: 84, likes: 3, hmms: 1, order: 1 },
+      { id: "p2", name: "지수", emoji: "🙂", photoBg: "#ffe0ec", filter: "saturate(1.15) hue-rotate(-8deg)", score: 92, likes: 6, hmms: 0, order: 2 },
+      { id: "p3", name: "현우", emoji: "😎", photoBg: "#e7dcff", filter: "saturate(.75) contrast(1.08)", score: 61, likes: 2, hmms: 4, order: 3 },
+      { id: "p4", name: "태호", emoji: "😲", photoBg: "#d9f0ff", filter: "hue-rotate(10deg) brightness(1.05)", score: 88, likes: 5, hmms: 1, order: 4 },
+      { id: "p5", name: "윤아", emoji: "😨", photoBg: "#d6faf1", filter: "sepia(.18) brightness(1.03)", score: 73, likes: 4, hmms: 2, order: 5 },
+      { id: "p6", name: "서준", emoji: "😐", photoBg: "#eefbd8", filter: "grayscale(.35) contrast(1.05)", score: 79, likes: 3, hmms: 2, order: 6 },
+      { id: "p7", name: "하윤", emoji: "🤢", photoBg: "#ffe1dc", filter: "saturate(1.3)", score: 95, likes: 8, hmms: 0, order: 7 },
+      { id: "p8", name: "민지", emoji: "🤭", photoBg: "#fff4cd", filter: "brightness(1.08) saturate(.9)", score: 67, likes: 1, hmms: 3, order: 8 },
+      { id: "p9", name: "정우", emoji: "🤩", photoBg: "#ece3ff", filter: "hue-rotate(-18deg)", score: 71, likes: 2, hmms: 2, order: 9 },
+      { id: "p10", name: "다은", emoji: "😴", photoBg: "#e2f4ff", filter: "sepia(.3) saturate(1.1)", score: 86, likes: 4, hmms: 1, order: 10 }
+    ].slice(0, this.props.players ?? 10);
+  }
+
+  viewSeconds() {
+    return Math.min(60, 10 + this.roster().length * 2);
+  }
+
+  componentDidMount() {
+    this._mounted = true;
+    setTimeout(() => this.syncRail(), 120);
+    window.__emoRR = this;
+    this.startLoop();
+  }
+
+  // rAF 루프는 매 프레임 스스로 다음 프레임을 예약하고 신선도 스탬프를 남긴다
+  startLoop() {
+    if (window.__emoRRTick && Date.now() - window.__emoRRTick < 1000) return;
+    let last = 0;
+    const frame = (ts) => {
+      window.__emoRRTick = Date.now();
+      const dt = last ? Math.min(120, ts - last) : 0;
+      last = ts;
+      const c = window.__emoRR;
+      if (c && c._mounted && dt > 0) c.step(dt);
+      window.__emoRRRaf = requestAnimationFrame(frame);
+    };
+    window.__emoRRRaf = requestAnimationFrame(frame);
+  }
+
+  step(dt) {
+    const total = this.roster().length;
+    const view = this.viewSeconds();
+    this.setState((s) => {
+      const el = s.elapsed + dt;
+      const n = Math.min(total, 1 + Math.floor(el / 850));
+      const doneMs = s.doneMs === null || s.doneMs === undefined ? (n >= total ? el : null) : s.doneMs;
+      const v = doneMs === null ? null : Math.max(0, view - Math.floor((el - doneMs) / 1000));
+      if (n === s.arrived && v === s.viewT && doneMs === s.doneMs) return { elapsed: el };
+      return { elapsed: el, arrived: n, doneMs: doneMs, viewT: v };
+    });
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
+    clearTimeout(this._bt);
+    clearTimeout(this._ht);
+    clearTimeout(this._st);
+  }
+
+  // 리액션은 토글 (C-4)
+  toggleLike(id) {
+    this.setState((s) => ({ liked: Object.assign({}, s.liked, { [id]: !s.liked[id] }), bump: s.liked[id] ? null : id }));
+    clearTimeout(this._bt);
+    this._bt = setTimeout(() => this.setState({ bump: null }), 460);
+  }
+
+  toggleHmm(id) {
+    this.setState((s) => ({ hmmed: Object.assign({}, s.hmmed, { [id]: !s.hmmed[id] }), hmmBump: s.hmmed[id] ? null : id }));
+    clearTimeout(this._ht);
+    this._ht = setTimeout(() => this.setState({ hmmBump: null }), 460);
+  }
+
+  // 현재 보고 있는 사람의 레일 슬롯을 state에서 직접 계산한다
+  slotOf(id) {
+    const arrived = this.roster().filter((p) => p.order <= this.state.arrived);
+    const ranked = arrived.slice().sort((a, b) => b.score - a.score);
+    const i = ranked.findIndex((r) => r.id === id);
+    return i < 0 ? 0 : i;
+  }
+
+  syncRail() {
+    const el = document.querySelector('[data-rail="rank"]');
+    if (!el || !el.clientWidth) return;
+    const RAIL = 70;
+    const target = this.slotOf(this.state.cursorId) * RAIL + 31 - el.clientWidth / 2 + 7;
+    const max = Math.max(0, el.scrollWidth - el.clientWidth);
+    const left = Math.max(0, Math.min(max, target));
+    el.scrollLeft = left;
+  }
+
+  queueSync() {
+    clearTimeout(this._st);
+    this._st = setTimeout(() => this.syncRail(), 80);
+  }
+
+  // 커서가 바뀌면 렌더 시점에 감지해 레일을 따라 스크롤한다
+  watchCursor(id) {
+    if (this._lastCursor !== id) {
+      this._lastCursor = id;
+      this.queueSync();
+    }
+  }
+
+  move(delta) {
+    const arrived = this.roster().filter((p) => p.order <= this.state.arrived);
+    const ranked = arrived.slice().sort((a, b) => b.score - a.score);
+    const i = Math.max(0, ranked.findIndex((r) => r.id === this.state.cursorId));
+    const nextId = ranked[(i + delta + ranked.length) % ranked.length].id;
+    this.setState({ cursorId: nextId });
+    this.queueSync();
+  }
+
+  jump(id) {
+    this.setState({ cursorId: id });
+    this.queueSync();
+  }
+
+  renderVals() {
+    const all = this.roster();
+    const arrived = all.filter((p) => p.order <= this.state.arrived);
+    const final = arrived.length === all.length;
+    const ranked = arrived.slice().sort((a, b) => b.score - a.score);
+    const pending = all.filter((p) => p.order > this.state.arrived).sort((a, b) => a.order - b.order);
+
+    const likeCount = (p) => p.likes + (this.state.liked[p.id] ? 1 : 0);
+    const hmmCount = (p) => p.hmms + (this.state.hmmed[p.id] ? 1 : 0);
+
+    let cur = arrived.find((p) => p.id === this.state.cursorId);
+    if (!cur) cur = ranked[0] || all[0];
+    const curScored = arrived.some((p) => p.id === cur.id);
+    const curRank = ranked.findIndex((r) => r.id === cur.id) + 1;
+    const curIsMe = cur.id === "me";
+    const canReact = curScored && !curIsMe;
+    this.watchCursor(cur.id);
+    window.__emoRR = this;
+    this._mounted = true;
+    this.startLoop();
+    const iLiked = !!this.state.liked[cur.id];
+    const iHmmed = !!this.state.hmmed[cur.id];
+
+    const RAIL = 70;
+    const rail = all.map((p) => {
+      const idx = ranked.findIndex((r) => r.id === p.id);
+      const isIn = idx >= 0;
+      const slot = isIn ? idx : ranked.length + pending.findIndex((q) => q.id === p.id);
+      const rank = idx + 1;
+      const isCur = isIn && p.id === cur.id;
+      return {
+        name: p.name,
+        emoji: isIn ? "" : "⏳",
+        thumbShow: isIn ? "block" : "none",
+        filter: p.filter,
+        likes: likeCount(p),
+        rank: isIn ? rank : "·",
+        rankBg: !isIn ? "#f1eee9" : rank === 1 ? "#ffd72f" : p.id === "me" ? "#ff3d86" : "#fff",
+        rankFg: !isIn ? "#8b867e" : rank === 1 ? "#111318" : p.id === "me" ? "#ffffff" : "#111318",
+        bg: isIn ? p.photoBg : "#f1eee9",
+        line: isCur ? "#ff3d86" : "#111318",
+        shadow: isCur ? "0 4px 0 #ff3d86" : "0 3px 0 #111318",
+        transform: "translateX(" + slot * RAIL + "px)",
+        opacity: isIn ? 1 : 0.4,
+        open: isIn ? () => this.jump(p.id) : null
+      };
+    });
+
+    const dots = ranked.map((r) =>
+      React.createElement("div", {
+        key: r.id,
+        style: {
+          width: r.id === cur.id ? 20 : 8,
+          height: 8,
+          borderRadius: 999,
+          border: "2px solid #111318",
+          background: r.id === cur.id ? "#ff3d86" : "rgba(255,255,255,.85)",
+          transition: "width .25s ease, background .25s ease"
+        }
+      })
+    );
+
+    const topics = {
+      "기쁨": { emoji: "😆", color: "#ffd72f", ink: "#111318" },
+      "분노": { emoji: "😠", color: "#ff5a47", ink: "#111318" },
+      "놀람": { emoji: "😲", color: "#8f66ff", ink: "#ffffff" },
+      "슬픔": { emoji: "😢", color: "#5ac8ff", ink: "#111318" },
+      "시크": { emoji: "😐", color: "#80efd6", ink: "#111318" },
+      "무서움": { emoji: "😨", color: "#ff3d86", ink: "#ffffff" },
+      "우웩": { emoji: "🤢", color: "#b8f16a", ink: "#111318" }
+    };
+    const key = this.props.emotion ?? "놀람";
+    const round = this.props.round ?? 3;
+    const rounds = this.props.rounds ?? 5;
+    const myRank = ranked.findIndex((r) => r.id === "me") + 1;
+    const viewT = this.state.viewT === null || this.state.viewT === undefined ? this.viewSeconds() : this.state.viewT;
+    const skipReady = (this.props.skipReady ?? 2) + (this.state.skipped ? 1 : 0);
+    const isFear = key === "무서움";
+
+    return {
+      topic: Object.assign({ name: key }, topics[key] || topics["놀람"]),
+      myScore: all.find((p) => p.id === "me").score,
+      myRankText: final ? "· " + myRank + "위" : "· 집계 중",
+      roundText: round + " / " + rounds + " 라운드 결과",
+      arrivedText: arrived.length + " / " + all.length + " 채점 완료",
+      statusBadge: final
+        ? { label: "최종 순위 확정", bg: "#80efd6", fg: "#111318" }
+        : { label: "실시간 집계 중", bg: "#fff", fg: "#111318" },
+      current: {
+        name: cur.name,
+        photoBg: cur.photoBg,
+        filter: cur.filter,
+        score: cur.score,
+        rankLabel: curRank + "위",
+        rankBg: curRank === 1 ? "#ffd72f" : curIsMe ? "#ff3d86" : "#fff",
+        rankFg: curIsMe && curRank !== 1 ? "#ffffff" : "#111318",
+        likeLabel: curIsMe ? "내 사진 " + likeCount(cur) : iLiked ? "좋아요 " + likeCount(cur) : "좋아요",
+        like: canReact ? () => this.toggleLike(cur.id) : null,
+        likeBg: !canReact ? "rgba(255,255,255,.9)" : iLiked ? "#ff3d86" : "#fff",
+        likeFg: !canReact ? "#8b867e" : iLiked ? "#ffffff" : "#111318",
+        likeLine: canReact ? "#111318" : "#c9c4bc",
+        likeShadow: canReact ? (iLiked ? "0 2px 0 #111318" : "0 5px 0 #111318") : "none",
+        likeCursor: canReact ? "pointer" : "default",
+        likeAnim: this.state.bump === cur.id ? "emo-heart .45s ease-out" : "none",
+        floatAnim: this.state.bump === cur.id ? "emo-float .7s ease-out" : "none",
+        hmmLabel: curIsMe ? "" + hmmCount(cur) : iHmmed ? "" + hmmCount(cur) : "에계",
+        hmm: canReact ? () => this.toggleHmm(cur.id) : null,
+        hmmBg: !canReact ? "rgba(255,255,255,.9)" : iHmmed ? "#ffd72f" : "#fff",
+        hmmFg: !canReact ? "#8b867e" : "#111318",
+        hmmLine: canReact ? "#111318" : "#c9c4bc",
+        hmmShadow: canReact ? (iHmmed ? "0 2px 0 #111318" : "0 5px 0 #111318") : "none",
+        hmmCursor: canReact ? "pointer" : "default",
+        hmmAnim: this.state.hmmBump === cur.id ? "emo-heart .45s ease-out" : "none",
+        hmmFloat: this.state.hmmBump === cur.id ? "emo-float .7s ease-out" : "none",
+        reactionNote: curIsMe
+          ? "내 사진에는 리액션을 보낼 수 없어요"
+          : "다시 누르면 취소돼요"
+      },
+      dots,
+      rail,
+      railWidth: all.length * 70 + 14 + "px",
+      prev: () => this.move(-1),
+      next: () => this.move(1),
+      skip: () => this.setState((s) => ({ skipped: !s.skipped })),
+      skipBtn: {
+        label: this.state.skipped ? "넘길 준비 " + skipReady + " / " + all.length : "스킵",
+        bg: this.state.skipped ? "#ffd72f" : isFear ? "#111318" : "#ff3d86",
+        fg: this.state.skipped ? "#111318" : "#ffffff",
+        line: "#111318",
+        shadow: this.state.skipped ? "0 2px 0 #111318" : "0 5px 0 #111318",
+        chipBg: "rgba(255,255,255,.95)",
+        chipFg: "#e92570",
+        chipLine: "#111318",
+        clockText: "00:" + String(Math.max(0, viewT)).padStart(2, "0"),
+        progress: Math.round((viewT / this.viewSeconds()) * 100) + "%"
+      },
+      footNote: this.state.skipped
+        ? "모두 스킵을 누르면 바로 다음 라운드로 넘어가요"
+        : "♥는 최고, ?는 “이게 1등이라고?” · 감상 시간 " + this.viewSeconds() + "초"
+    };
+  }
+}
+</script>
+</body>
+</html>

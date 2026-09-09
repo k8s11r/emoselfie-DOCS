@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# 에디터 임시 파일
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# 로컬 작업 사본
+# 이 저장소는 확정된 문서만 관리한다. 검토 중인 사본은 커밋하지 않는다.
+draft/
+*.local.md
