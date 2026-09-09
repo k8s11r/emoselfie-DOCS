@@ -2,7 +2,7 @@
 
 **작성일** 2026-09-04
 **대상** `~/project/p1/emoselfie/*.dc.html` (Claude Design 캔버스, 2026-09-03)
-**기준** [requirements.md](../requirements.md) PRD v1.1 · [DECISIONS.md](../DECISIONS.md) C-1 ~ C-12
+**기준** [requirements.md](../../requirements.md) PRD v1.1 · [DECISIONS.md](../../DECISIONS.md) C-1 ~ C-12
 
 ---
 
