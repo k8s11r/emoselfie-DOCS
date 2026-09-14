@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="940" viewBox="0 0 1280 940" role="img" aria-labelledby="title desc">
+  <title id="title">Emoselfie k3d 아키텍처</title>
+  <desc id="desc">요청은 Browser에서 serverlb, Traefik, web, backend 순으로 전달된다. backend는 세 노드에 분산되며 각 저장소는 아래쪽 열에 정렬된다. 실선은 요청과 제어, 점선은 모델 파일과 볼륨 관계이다.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#475569"/></marker>
+    <style>
+      text { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .title { font-size:30px; font-weight:700; fill:#0f172a; }
+      .subtitle { font-size:16px; fill:#475569; }
+      .label { font-size:17px; font-weight:700; fill:#0f172a; }
+      .small { font-size:13px; fill:#475569; }
+      .tiny { font-size:12px; fill:#64748b; }
+      .box { fill:white; stroke:#94a3b8; }
+      .network { fill:#e0f2fe; stroke:#0284c7; }
+      .data { fill:#fefce8; stroke:#ca8a04; }
+      .cache { fill:#f5f3ff; stroke:#7c3aed; }
+      .model { fill:#ecfdf5; stroke:#059669; }
+      .job { fill:#fff7ed; stroke:#f97316; }
+      .edge { fill:none; stroke:#475569; stroke-width:2; marker-end:url(#arrow); }
+      .storage { stroke-dasharray:6 5; }
+    </style>
+  </defs>
+  <rect width="1280" height="940" fill="#f8fafc"/>
+  <text class="title" x="48" y="56">Emoselfie k3d 아키텍처</text>
+  <text class="subtitle" x="48" y="86">로컬 3노드 k3d에서 운영 k3s 배포 형태를 미리 검증하는 구성</text>
+  <rect x="280" y="116" width="952" height="758" rx="8" fill="#eef6f2" stroke="#6aa884" stroke-width="2"/>
+  <text class="label" x="308" y="148">k3d cluster: mycluster</text>
+  <text class="small" x="308" y="170">server nodes x3 · serverlb · Traefik · Kubernetes workloads</text>
+  <g text-anchor="middle">
+    <rect class="box" x="48" y="204" width="184" height="84" rx="8" stroke-width="1.5"/>
+    <text class="label" x="140" y="234">Browser</text>
+    <text class="small" x="140" y="257">http://localhost</text>
+  </g>
+  <g text-anchor="middle">
+    <rect class="network" x="308" y="204" width="220" height="84" rx="8" stroke-width="1.5"/>
+    <text class="label" x="418" y="234">serverlb</text>
+    <text class="small" x="418" y="257">80/443 host bind</text>
+  </g>
+  <g text-anchor="middle">
+    <rect class="network" x="608" y="204" width="220" height="84" rx="8" stroke-width="1.5"/>
+    <text class="label" x="718" y="234">Traefik</text>
+    <text class="small" x="718" y="257">Ingress controller</text>
+  </g>
+  <g text-anchor="middle">
+    <rect class="box" x="908" y="204" width="296" height="84" rx="8" stroke-width="1.5"/>
+    <text class="label" x="1056" y="234">web Deployment</text>
+    <text class="small" x="1056" y="257">nginx + FE build</text>
+    <text class="tiny" x="1056" y="280">SPA fallback · API proxy</text>
+  </g>
+  <path class="edge" d="M232 246 H308"/>
+  <path class="edge" d="M528 246 H608"/>
+  <path class="edge" d="M828 246 H908"/>
+  <path class="edge" d="M1056 288 V352"/>
+  <text class="tiny" x="1038" y="323" text-anchor="end">/api · /socket.io · /media</text>
+  <rect class="box" x="308" y="352" width="896" height="160" rx="8" stroke-width="1.5"/>
+  <text class="label" x="332" y="383">backend Deployment x3</text>
+  <text class="small" x="1180" y="383" text-anchor="end">FastAPI + Socket.IO · emotion inference</text>
+  <g text-anchor="middle">
+    <rect class="box" x="332" y="406" width="264" height="82" rx="8" stroke-width="1.5"/>
+    <text class="label" x="464" y="436">node 1</text>
+    <text class="small" x="464" y="459">backend pod</text>
+  </g>
+  <g text-anchor="middle">
+    <rect class="box" x="624" y="406" width="264" height="82" rx="8" stroke-width="1.5"/>
+    <text class="label" x="756" y="436">node 2</text>
+    <text class="small" x="756" y="459">backend pod</text>
+  </g>
+  <g text-anchor="middle">
+    <rect class="box" x="916" y="406" width="264" height="82" rx="8" stroke-width="1.5"/>
+    <text class="label" x="1048" y="436">node 3</text>
+    <text class="small" x="1048" y="459">backend pod</text>
+  </g>
+  <path class="edge" d="M408 512 V592"/>
+  <path class="edge" d="M640 512 V592"/>
+  <path class="edge" d="M872 512 V592"/>
+  <path class="edge storage" d="M1104 592 V512"/>
+  <text class="tiny" x="424" y="556">DB 연결</text>
+  <text class="tiny" x="656" y="556">master 탐색</text>
+  <text class="tiny" x="888" y="556">이미지 캐시</text>
+  <text class="tiny" x="1120" y="556">모델 마운트</text>
+  <g text-anchor="middle">
+    <rect class="data" x="308" y="592" width="200" height="100" rx="8" stroke-width="1.5"/>
+    <text class="label" x="408" y="622">PostgreSQL</text>
+    <text class="small" x="408" y="645">StatefulSet x1</text>
+    <text class="tiny" x="408" y="668">RWO PVC · 단일 장애점</text>
+  </g>
+  <g text-anchor="middle">
+    <rect class="cache" x="540" y="592" width="200" height="100" rx="8" stroke-width="1.5"/>
+    <text class="label" x="640" y="622">Redis Sentinel</text>
+    <text class="small" x="640" y="645">StatefulSet x3</text>
+    <text class="tiny" x="640" y="668">master 감시 · failover</text>
+  </g>
+  <g text-anchor="middle">
+    <rect class="cache" x="772" y="592" width="200" height="100" rx="8" stroke-width="1.5"/>
+    <text class="label" x="872" y="622">redis-media</text>
+    <text class="small" x="872" y="645">image cache</text>
+    <text class="tiny" x="872" y="668">volatile · allkeys-lru</text>
+  </g>
+  <g text-anchor="middle">
+    <rect class="model" x="1004" y="592" width="200" height="100" rx="8" stroke-width="1.5"/>
+    <text class="label" x="1104" y="622">models PVC · RWX</text>
+    <text class="small" x="1104" y="645">hostPath /models</text>
+    <text class="tiny" x="1104" y="668">모든 노드에 마운트 (@all)</text>
+  </g>
+  <g text-anchor="middle">
+    <rect class="job" x="308" y="748" width="200" height="98" rx="8" stroke-width="1.5"/>
+    <text class="label" x="408" y="778">migrate</text>
+    <text class="small" x="408" y="801">Job x1 · Alembic 실행</text>
+    <text class="tiny" x="408" y="824">DB 스키마 적용</text>
+  </g>
+  <g text-anchor="middle">
+    <rect class="cache" x="540" y="748" width="200" height="98" rx="8" stroke-width="1.5"/>
+    <text class="label" x="640" y="778">Redis</text>
+    <text class="small" x="640" y="801">StatefulSet x3</text>
+    <text class="tiny" x="640" y="824">master + replicas</text>
+  </g>
+  <g text-anchor="middle">
+    <rect class="model" x="1004" y="748" width="200" height="98" rx="8" stroke-width="1.5"/>
+    <text class="label" x="1104" y="778">prepare-models</text>
+    <text class="small" x="1104" y="801">backend initContainer</text>
+    <text class="tiny" x="1104" y="824">다운로드 · sha256 검증</text>
+  </g>
+  <path class="edge" d="M408 748 V692"/>
+  <path class="edge" d="M640 692 V748"/>
+  <path class="edge storage" d="M1104 748 V692"/>
+  <text class="small" x="48" y="910">로컬 검증 초점: 노드 분산 · RWX 모델 공유 · Redis failover · 동일 오리진</text>
+  <text class="tiny" x="1232" y="910" text-anchor="end">실선: 요청 / 제어 · 점선: 모델 파일 / 볼륨</text>
+</svg>
